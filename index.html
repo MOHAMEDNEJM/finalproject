@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي للطالب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--accent-color);
+        }
+        
+        .profile-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .profile-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .profile-body {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-body {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .info-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-left: 10px;
+            color: var(--primary-color);
+        }
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            min-width: 120px;
+        }
+        
+        .info-value {
+            color: #555;
+        }
+        
+        .hobbies-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .hobby-item {
+            background-color: var(--light-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .hobby-item:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .hobby-item i {
+            margin-left: 5px;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .contact-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            opacity: 0.1;
+        }
+        
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .university-logo {
+            width: 80px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            opacity: 0.8;
+        }
+        
+        .student-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-item {
+            margin-bottom: 15px;
+        }
+        
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .skill-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            margin-top: 10px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Scroll buttons */
+        .scroll-btn {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-btn:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        .scroll-to-top {
+            bottom: 80px;
+            left: 30px;
+        }
+        
+        .scroll-to-bottom {
+            bottom: 20px;
+            left: 30px;
+        }
+        
+        /* Professional enhancements */
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .progress-ring {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+        
+        .progress-ring__circle {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        .progress-ring__circle--background {
+            stroke: #e0e0e0;
+        }
+        
+        .progress-ring__circle--progress {
+            stroke: var(--primary-color);
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+        
+        .progress-ring__text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .floating-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 100;
+        }
+        
+        .floating-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <div class="container">
+        <div class="profile-card">
+            <div class="badge">الملف الشخصي</div>
+            <div class="profile-header">
+                <img src="D:\New folder (2)\MY_project\Final project\my pict.jpg" alt="صورة الطالب" class="student-photo">
+                <h1 class="profile-title">الملف الشخصي للطالب</h1>
+                <p class="profile-subtitle">جامعة عين شمس - كلية التربية</p>
+            </div>
+            
+            <div class="profile-body">
+                <div class="left-section">
+                    <div class="info-section">
+                        <h2 class="section-title"><i class="fas fa-user-graduate"></i> معلومات الطالب</h2>
+                        <div class="info-item">
+                            <span class="info-label">الاسم:</span>
+                            <span class="info-value">محمد علاء الدين محمد نجم</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">الرقم التعريفي:</span>
+                            <span class="info-value">2314145</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">البريد الإلكتروني:</span>
+                            <span class="info-value">free_edu2314145@edu.asu.edu.eg</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">السنة الدراسية:</span>
+                            <span class="info-value">الرابعة</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h2 class="section-title"><i class="fas fa-chalkboard-teacher"></i> معلومات المحاضر</h2>
+                        <div class="info-item">
+                            <span class="info-label">اسم المحاضر:</span>
+                            <span class="info-value">أ.د/ محمد عنتر</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">القسم:</span>
+                            <span class="info-value">تكنولوجيا التعليم الرقمي</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">البريد الإلكتروني:</span>
+                            <span class="info-value">ge.ud@u.asu.edu.mx</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Ring -->
+                    <div class="info-section">
+                        <h2 class="section-title"><i class="fas fa-chart-line"></i> مستوى التقدم</h2>
+                        <div class="progress-ring">
+                            <svg width="100" height="100" viewBox="0 0 100 100">
+                                <circle class="progress-ring__circle--background" stroke-width="8" fill="transparent" r="40" cx="50" cy="50"/>
+                                <circle class="progress-ring__circle--progress" stroke-width="8" fill="transparent" r="40" cx="50" cy="50" stroke-dasharray="251.2" stroke-dashoffset="75.36"/>
+                            </svg>
+                            <div class="progress-ring__text">70%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-section">
+                    <div class="info-section">
+                        <h2 class="section-title"><i class="fas fa-heart"></i> الهويات والاهتمامات</h2>
+                        <div class="hobbies-list">
+                            <div class="hobby-item"><i class="fas fa-book-open"></i> التطلع لكل جديد</div>
+                            <div class="hobby-item"><i class="fas fa-database"></i> التعلم الداتا</div>
+                            <div class="hobby-item"><i class="fas fa-laptop-code"></i> البرمجة</div>
+                            <div class="hobby-item"><i class="fas fa-globe"></i> تصميم المواقع</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h2 class="section-title"><i class="fas fa-graduation-cap"></i> المهارات</h2>
+                        <div class="skills-container">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>تطوير الويب</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%; background-color: #3498db;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>تحليل البيانات</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 75%; background-color: #e74c3c;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>البرمجة</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 90%; background-color: #2ecc71;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>تكنولوجيا التعليم</span>
+                                    <span>80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 80%; background-color: #9b59b6;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="contact-btn" id="contactBtn">
+                        <i class="fas fa-envelope"></i> تواصل معي
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll buttons -->
+    <div class="scroll-btn scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <div class="scroll-btn scroll-to-bottom" id="scrollToBottom">
+        <i class="fas fa-arrow-down"></i>
+    </div>
+    
+    <!-- Floating notification -->
+    <div class="floating-notification" id="notification">
+        مرحبًا! كيف يمكنني مساعدتك اليوم؟
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>جميع الحقوق محفوظة &copy; 2025 <a href="mailto:free_edu2314145@edu.asu.edu.eg">MOHAMED ALAA NEJM</a></p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/share/1FarBHSpLc/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/ma7mad3laa?s=21&t=su_5PURyclVz5wEESCoLkQ" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/mohamed-nejm-b52775303?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BRLIE24%2FURAiibdjDcCpesw%3D%3D" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/MOHAMEDNEJM/data-test" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation for hobby items
+            const hobbyItems = document.querySelectorAll('.hobby-item');
+            hobbyItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Contact button functionality
+            const contactBtn = document.getElementById('contactBtn');
+            contactBtn.addEventListener('click', function() {
+                const email = 'free_edu2314145@edu.asu.edu.eg';
+                window.location.href = `mailto:${email}`;
+            });
+            
+            // Animate skill bars on scroll
+            const skillBars = document.querySelectorAll('.skill-progress');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 100);
+                    }
+                });
+            }, {threshold: 0.5});
+            
+            skillBars.forEach(bar => {
+                observer.observe(bar);
+            });
+            
+            // Scroll to top button
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Scroll to bottom button
+            const scrollToBottomBtn = document.getElementById('scrollToBottom');
+            scrollToBottomBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Show/hide scroll buttons based on scroll position
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.opacity = '1';
+                } else {
+                    scrollToTopBtn.style.opacity = '0';
+                }
+            });
+            
+            // Show notification after 3 seconds
+            setTimeout(() => {
+                document.getElementById('notification').classList.add('show');
+                
+                // Hide notification after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('notification').classList.remove('show');
+                }, 5000);
+            }, 3000);
+            
+            // Initialize progress ring
+            const circle = document.querySelector('.progress-ring__circle--progress');
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+            
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = circumference;
+            
+            const offset = circumference - (70 / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        });
+    </script>
+</body>
+</html>
